@@ -51,6 +51,7 @@ public class CategoryMenu extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<category>> call, Response<List<category>> response) {
                 categoryList = response.body();
+                Toast.makeText(CategoryMenu.this, "Size:" + categoryList.size(), Toast.LENGTH_SHORT).show();
                 categoryAdapter categoryAdapter = new categoryAdapter(categoryList);
                 rcv_category.setAdapter(categoryAdapter);
             }

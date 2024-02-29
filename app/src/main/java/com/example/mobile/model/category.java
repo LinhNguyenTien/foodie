@@ -1,5 +1,7 @@
 package com.example.mobile.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class category {
     private String categoryID;
     private String category;

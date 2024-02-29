@@ -3,7 +3,7 @@ package com.example.mobile.model;
 import java.io.Serializable;
 
 public class customer implements Serializable {
-    private String phone;
+    private String phoneNumber;
     private String accStatusID;
     private String password;
     private String firstName;
@@ -11,8 +11,8 @@ public class customer implements Serializable {
     private String email;
     public customer() {    }
 
-    public customer(String phone, String accStatusID, String password, String firstName, String lastName, String email) {
-        this.phone = phone;
+    public customer(String phoneNumber, String accStatusID, String password, String firstName, String lastName, String email) {
+        this.phoneNumber = phoneNumber;
         this.accStatusID = accStatusID;
         this.password = password;
         this.firstName = firstName;
@@ -20,12 +20,12 @@ public class customer implements Serializable {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAccStatusID() {
@@ -66,17 +66,5 @@ public class customer implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "customer{" +
-                "phone='" + phone + '\'' +
-                ", accStatusID='" + accStatusID + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
 
                 //Check phone number and password
                 for (customer customer : listCustomer) {
-                    if (phone.equals(customer.getPhone()) && cryptoPassword(password).equals(customer.getPassword())) {
+                    if (phone.equals(customer.getPhoneNumber()) && cryptoPassword(password).equals(customer.getPassword())) {
                         isCustomer = true;
                         //This is correct customer account
                         currentUser.currentCustomer = customer;

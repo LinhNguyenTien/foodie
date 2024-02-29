@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller.CartManagement"
+            android:exported="false" />
+        <activity
+            android:name=".controller.ProductDetail"
+            android:exported="false" />
+        <activity
             android:name=".controller.ProductMenu"
             android:exported="false" />
         <activity

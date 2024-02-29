@@ -11,4 +11,5 @@
     <color name="btnLogin">#FFEB3B</color>
     <color name="green">#1ADD21</color>
     <color name="orange">#FF9800</color>
+    <color name="background_card_product">#D9DADB</color>
 </resources>

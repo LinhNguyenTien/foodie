@@ -1,5 +1,6 @@
 package com.example.mobile.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile.R;
+import com.example.mobile.controller.ProductDetail;
+import com.example.mobile.controller.ProductMenu;
 import com.example.mobile.model.product;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class productAdapter extends RecyclerView.Adapter<productAdapter.productViewHolder>{
-    private List<product> productList;
+    private final List<product> productList;
 
     public productAdapter(List<product> productList) {
         this.productList = productList;
@@ -27,7 +30,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.productV
     @Override
     public productViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
-        return new productViewHolder(view);
+        return new productViewHolder(view, productList);
     }
 
     @Override
@@ -53,13 +56,38 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.productV
         private TextView tvName, tvPrice;
         private ImageView ivProduct;
         private Button btnBuyNow;
+        private List<product> productList;
 
-        public productViewHolder(@NonNull View itemView) {
+        public productViewHolder(@NonNull View itemView, List<product> productList) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             ivProduct = itemView.findViewById(R.id.ivProduct);
             btnBuyNow = itemView.findViewById(R.id.btnBuyNow);
+            this.productList = productList;
+
+            ivProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String productID = getProductFromView(getAdapterPosition());
+                    Intent intent = new Intent(itemView.getContext(), ProductDetail.class);
+                    intent.putExtra("product_id", productID);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String categoryId = getProductFromView(getAdapterPosition());
+                    Intent intent = new Intent(itemView.getContext(), ProductDetail.class);
+                    intent.putExtra("product_id", categoryId);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+        }
+
+        private String getProductFromView(int adapterPosition) {
+            return productList.get(adapterPosition).getProductID();
         }
     }
 }

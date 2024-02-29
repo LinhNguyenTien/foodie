@@ -2,22 +2,18 @@ package com.example.mobile.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.adapter.adsAdapter;
 import com.example.mobile.currentUser;
 import com.example.mobile.model.advertisement;
-import com.example.mobile.model.customer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +26,7 @@ public class HomePage extends AppCompatActivity {
     private CircleIndicator circleIndicator;
     private adsAdapter adapter;
     private CardView menuCard, orderCard, storeCard, discountCard;
+    private ImageView cart, location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,5 +68,20 @@ public class HomePage extends AppCompatActivity {
         orderCard = findViewById(R.id.orderCard);
         storeCard = findViewById(R.id.storeCard);
         discountCard = findViewById(R.id.discountCard);
+        cart = findViewById(R.id.cart);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePage.this, CartManagement.class);
+                if(currentUser.currentCustomer == null) {
+                    intent.putExtra("customerPhone", "null");
+                }
+                else {
+                    intent.putExtra("customerPhone", currentUser.currentCustomer.getPhoneNumber());
+                }
+                startActivity(intent);
+            }
+        });
+        location = findViewById(R.id.location);
     }
 }
