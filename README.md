@@ -14,3 +14,16 @@ Foodie is a solution to solve e-commerce problems for food retailers. It provide
 + In Spring Tool Suite **Right click on the project name -> Run as -> Maven Build... -> In "Goal" field enter "clean install" to install all nessesary libraries -> Run**.
 + **Right click on the project name -> Run as -> Spring Boot App**.
 + Run the project on your virtual mobile device.
+
+# Usage
+There is some features in Foodie Application:
+1. Log in account
+![Screenshot of Login feature](https://myoctocat.com/assets/images/base-octocat.svg)
+2. Registation
+3. Homepage
+4. Category menu
+5. Product menu
+6. Product detail
+7. Cart detail
+8. User profile
+9. Payment detail
