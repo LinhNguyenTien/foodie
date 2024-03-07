@@ -74,3 +74,10 @@ There is some features in Foodie Application:
 ![Figure 9: Screenshot of Login interface](https://i.ibb.co/bKmxSDk/user-Profile.png)
 
 **and other interfaces in the process...**
+
+# Members
+[Nguyen Tien Linh](https://github.com/LinhNguyenTien) - Mobile Developer
+
+[Tran Trung Kien](https://github.com/ttk2402) - Backend Developer
+
+[Bui Thi Diem Kieu](https://github.com/btdiemkieu603) - Web Developer
