@@ -1,0 +1,34 @@
+.table {
+    .cellWrapper {
+      display: flex;
+      align-items: center;
+        margin-right: 5px;
+      
+      .firtName{
+        margin-right: 5px;
+      }
+    }
+  
+    .status {
+      padding: 5px;
+      border-radius: 5px;
+      &.Chờ{
+        color: blue;
+        background-color: rgba(115, 178, 242, 0.151);
+      }
+      &.Đang{
+        color: green;
+        background-color: rgba(0, 128, 0, 0.151);
+      }
+      &.Hủy{
+        color: red;
+        background-color: rgba(236, 118, 45, 0.151);
+      }
+      &.Đã {
+        color: goldenrod;
+        background-color: rgba(189, 189, 3, 0.103);
+      }
+
+    }
+  }
+  
