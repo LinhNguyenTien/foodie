@@ -3,17 +3,17 @@ Foodie is a solution to solve e-commerce problems for food retailers. It provide
 
 # Technologies
 ## Android Studio
-Android Studio là IDE chính thức được sử dụng trong phát triển ứng dụng Android dựa trên IntelliJ IDEA. Chức năng chính của Android Studio là cung cấp các giao diện giúp người dùng có thể tạo các ứng dụng và xử lý các công cụ file phức tạp sau hậu trường. Ngôn ngữ lập trình được sử dụng trong Android Studio là Java và Kotlin.
+Android Studio is the official IDE used in Android application development based on IntelliJ IDEA. The main function of Android Studio is to provide interfaces that help users create applications and handle complex file stuff behind the scenes. The programming languages ​​used in Android Studio are Java and Kotlin.
 
 ![](https://i.ibb.co/MyzHL90/Android-Studio.png)
 
 ## Retrofit
-Retrofit là một type-safe HTTP Client cho Java và Android. Nó làm cho việc truy xuất và tải lên JSON (hoặc dữ liệu có cấu trúc khác) tương đối dễ dàng thông qua một dịch vụ web dựa trên REST.
+Retrofit is a type-safe HTTP Client for Java and Android. It makes retrieving and uploading JSON (or other structured data) relatively easy via a REST-based web service.
 
 ![](https://i.ibb.co/TkXnpsr/retrofit.png)
 
 ## RESTful API
-RESTful API là một tiêu chuẩn dùng trong việc thiết kế API cho các ứng dụng web (thiết kế Web services) để tiện cho việc quản lý các resource. Nó chú trọng vào tài nguyên hệ thống (tệp văn bản, ảnh, âm thanh, video, hoặc dữ liệu động…), bao gồm các trạng thái tài nguyên được định dạng và được truyền tải qua HTTP.
+RESTful API is a standard used in designing APIs for web applications (Web services design) to facilitate the management of resources.
 
 ![](https://i.ibb.co/9ZxWTQ1/restful-api.jpg)
 
