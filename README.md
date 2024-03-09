@@ -30,9 +30,9 @@ RESTful API là một tiêu chuẩn dùng trong việc thiết kế API cho các
 + Open Spring Tool Suite, in file **src/main/resources/application.properties** edit your MySQL username and password.
 
 ## Run the project
-+ In Spring Tool Suite **Right click on the project name -> Run as -> Maven Build... -> In "Goal" field enter "clean install" to install all nessesary libraries -> Run**.
-+ **Right click on the project name -> Run as -> Spring Boot App**.
-+ Run the project on your virtual mobile device.
++ In Spring Tool Suite, **right click on the project name -> Run as -> Maven Build... -> In "Goal" field enter "clean install" to install all nessesary libraries -> Run**.
++ In Spring Tool Suite, **right click on the project name -> Run as -> Spring Boot App**.
++ In Android Studio, run the project on your Android Virtual Device (ADV).
 
 # Features of Application
 There is some features in Foodie Application:
@@ -73,7 +73,7 @@ There is some features in Foodie Application:
 
 ![Figure 9: Screenshot of Login interface](https://i.ibb.co/bKmxSDk/user-Profile.png)
 
-**and other interfaces in the process...**
+**and other user interfaces in the process...**
 
 # Members
 [Nguyen Tien Linh](https://github.com/LinhNguyenTien) - Mobile Developer
