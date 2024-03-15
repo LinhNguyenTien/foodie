@@ -47,7 +47,7 @@ There is some features in Foodie Application:
 
 **3. Homepage**
 
-![Figure 3: Screenshot of Login interface](https://i.ibb.co/Zgpb04B/login.png)
+![Figure 3: Screenshot of Login interface](https://i.ibb.co/vh1W9bf/homepage.png)
 
 **4. Category menu**
 
@@ -71,7 +71,7 @@ There is some features in Foodie Application:
 
 **9. Payment detail**
 
-![Figure 9: Screenshot of Login interface](https://i.ibb.co/bKmxSDk/user-Profile.png)
+![Figure 9: Screenshot of Login interface](https://i.ibb.co/sbGDjbQ/payment.png)
 
 **and other user interfaces in the process...**
 
