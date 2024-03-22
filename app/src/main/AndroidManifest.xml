@@ -16,6 +16,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller.OrderDetail"
+            android:exported="false" />
+        <activity
+            android:name=".controller.DiscountManagement"
+            android:exported="false" />
+        <activity
+            android:name=".controller.OrderManagement"
+            android:exported="false" />
+        <activity
+            android:name=".controller.PaymentInformation"
+            android:exported="false" />
+        <activity
+            android:name=".controller.ProfileManagement"
+            android:exported="false" />
+        <activity
             android:name=".controller.CartManagement"
             android:exported="false" />
         <activity

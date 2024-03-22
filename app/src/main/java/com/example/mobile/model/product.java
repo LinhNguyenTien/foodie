@@ -1,22 +1,27 @@
 package com.example.mobile.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class product {
+    @SerializedName("id")
     private String productID;
-    private String categoryID;
+    @SerializedName("name")
     private String productName;
+    @SerializedName("price")
     private float productPrice;
-    private String discription;
+    @SerializedName("description")
+    private String description;
+    @SerializedName("url_image_product")
     private String imageLink;
 
     public product() {
     }
 
-    public product(String productID, String categoryID, String productName, float productPrice, String discription, String imageLink) {
+    public product(String productID, String productName, float productPrice, String description, String imageLink) {
         this.productID = productID;
-        this.categoryID = categoryID;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.discription = discription;
+        this.description = description;
         this.imageLink = imageLink;
     }
 
@@ -26,14 +31,6 @@ public class product {
 
     public void setProductID(String productID) {
         this.productID = productID;
-    }
-
-    public String getCategoryID() {
-        return categoryID;
-    }
-
-    public void setCategoryID(String categoryID) {
-        this.categoryID = categoryID;
     }
 
     public String getProductName() {
@@ -52,12 +49,12 @@ public class product {
         this.productPrice = productPrice;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String discription) {
+        this.description = discription;
     }
 
     public String getImageLink() {

@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.mobile.R;
 import com.example.mobile.adapter.productAdapter;
 import com.example.mobile.api.ApiService;
+import com.example.mobile.currentUser;
 import com.example.mobile.model.product;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class ProductMenu extends AppCompatActivity {
     private ImageView ivExit, ivLocation, ivCart;
     private RecyclerView rcvProduct;
     private String selectedCategoryID;
-    private List<product> productList, productByCateList;
+    private List<product> productList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,6 @@ public class ProductMenu extends AppCompatActivity {
         initView();
 
         productList = new ArrayList<>();
-        productByCateList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rcvProduct.setLayoutManager(linearLayoutManager);
@@ -52,20 +53,19 @@ public class ProductMenu extends AppCompatActivity {
         });
         ivLocation = findViewById(R.id.ivLocation);
         ivCart = findViewById(R.id.ivCart);
+        ivCart.setOnClickListener(v -> {
+            startActivity(new Intent(ProductMenu.this, CartManagement.class));
+        });
         rcvProduct = findViewById(R.id.rcvCategory);
     }
 
     private void getListProduct() {
-        ApiService.apiService.getListProduct().enqueue(new Callback<List<product>>() {
+        ApiService.apiService.getListProduct(Integer.parseInt(selectedCategoryID)).enqueue(new Callback<List<product>>() {
             @Override
             public void onResponse(Call<List<product>> call, Response<List<product>> response) {
                 productList = response.body();
-                for (product product : productList) {
-                    if(product.getCategoryID().compareTo(selectedCategoryID) == 0) {
-                        productByCateList.add(product);
-                    }
-                }
-                productAdapter productAdapter = new productAdapter(productByCateList);
+                Toast.makeText(ProductMenu.this, "Size:"+productList.size(), Toast.LENGTH_SHORT).show();
+                productAdapter productAdapter = new productAdapter(productList);
                 rcvProduct.setAdapter(productAdapter);
             }
 

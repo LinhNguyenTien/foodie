@@ -77,21 +77,21 @@ public class Register extends AppCompatActivity {
         String email = edtEmail.getText().toString().trim();
         String password = cryptoPassword(edtPass.getText().toString().trim());
 
-        customer customer = new customer(phone, "01", password, firstName, lastName, email);
-        ApiService.apiService.createNewAccount(customer).enqueue(new Callback<com.example.mobile.model.customer>() {
-            @Override
-            public void onResponse(Call<com.example.mobile.model.customer> call, Response<com.example.mobile.model.customer> response) {
-                customer newCustomer = response.body();
-                if(newCustomer != null) {
-                   showPopupWelcome(newCustomer.getFirstName().toString() +" "+newCustomer.getLastName().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<com.example.mobile.model.customer> call, Throwable t) {
-
-            }
-        });
+//        customer customer = new customer(phone, password, firstName, lastName, email);
+//        ApiService.apiService.createNewAccount(customer).enqueue(new Callback<com.example.mobile.model.customer>() {
+//            @Override
+//            public void onResponse(Call<com.example.mobile.model.customer> call, Response<com.example.mobile.model.customer> response) {
+//                customer newCustomer = response.body();
+//                if(newCustomer != null) {
+//                   showPopupWelcome(newCustomer.getFirstName().toString() +" "+newCustomer.getLastName().toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<com.example.mobile.model.customer> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     public String cryptoPassword(String pass) {

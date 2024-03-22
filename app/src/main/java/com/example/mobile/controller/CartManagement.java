@@ -16,9 +16,11 @@ import com.example.mobile.R;
 import com.example.mobile.adapter.ReviewAdapter;
 import com.example.mobile.adapter.itemAdapter;
 import com.example.mobile.api.ApiService;
+import com.example.mobile.currentUser;
 import com.example.mobile.model.cart;
 import com.example.mobile.model.item;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,21 +36,20 @@ public class CartManagement extends AppCompatActivity {
     private ImageView ivExit;
     private List<item> itemList;
     private cart cart;
+    private itemAdapter itemAdapter;
     private float sum = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_management_cart);
-
         initView();
-        String customerPhone = getIntent().getStringExtra("customerPhone");
         //If the user signed in customerPhone will contain the string value of phone number
-        if(customerPhone != null) {
+        if(currentUser.currentCustomer != null) {
             itemList = new ArrayList<>();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             rcvItem.setLayoutManager(linearLayoutManager);
-            getListItems(customerPhone);
+            getListItems();
         }
         //else there is no string value and set an empty itemAdapter for rcvItem
         else {
@@ -60,38 +61,35 @@ public class CartManagement extends AppCompatActivity {
         }
     }
 
-    private void getListItems(String customerPhone) {
-        ApiService.apiService.getCardID(customerPhone).enqueue(new Callback<List<cart>>() {
+    private void getListItems() {
+        ApiService.apiService.getListItem(currentUser.currentCustomer.getCart().getCartID()).enqueue(new Callback<List<item>>() {
             @Override
-            public void onResponse(Call<List<cart>> call, Response<List<cart>> response) {
-                if(response.isSuccessful()){
-                    //get the first element of array carts
-                    cart = response.body().get(0);
-                    ApiService.apiService.getListItem(cart.getCartID(), "-1").enqueue(new Callback<List<item>>() {
-                        @Override
-                        public void onResponse(Call<List<item>> call, Response<List<item>> response) {
-                            itemList = response.body();
-                            for (item item : itemList){
-                                 sum += Double.parseDouble(item.getPrice())*Integer.parseInt(item.getQuantity());
-                            }
-                            tvSum.setText(String.valueOf(sum) + " VNĐ");
-                            itemAdapter itemAdapter = new itemAdapter(itemList, tvSum);
-                            rcvItem.setAdapter(itemAdapter);
+            public void onResponse(Call<List<item>> call, Response<List<item>> response) {
+                if(response.isSuccessful()) {
+                    itemList = response.body();
+                    System.out.println("itemList size: " + itemList.size());
+                    if(itemList != null) {
+                        sum=0;
+                        for (item item : itemList){
+                            sum += Double.parseDouble(item.getPrice());
                         }
-
-                        @Override
-                        public void onFailure(Call<List<item>> call, Throwable t) {
-                            Toast.makeText(CartManagement.this, "Connection fail", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        DecimalFormat df = new DecimalFormat("#,###");
+                        String formattedSum = df.format(sum);
+                        tvSum.setText(String.valueOf(formattedSum) + " đ");
+                        itemAdapter = new itemAdapter(itemList, tvSum);
+                        rcvItem.setAdapter(itemAdapter);
+                    }
+                    else {return;}
+                }
+                else {
+                    System.out.println("Error code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<cart>> call, Throwable t) {
-                cart = null;
-                Toast.makeText(CartManagement.this, "Get cartID fail", Toast.LENGTH_SHORT).show();
-                System.out.println(t);
+            public void onFailure(Call<List<item>> call, Throwable t) {
+                System.out.println("Error: " + t);
+                Toast.makeText(CartManagement.this, "Connection fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,12 +105,20 @@ public class CartManagement extends AppCompatActivity {
             }
         });
         btnPayment = findViewById(R.id.btnPayment);
+        btnPayment.setOnClickListener(v -> {
+            if(itemAdapter.getItemCount()==0) {
+                Toast.makeText(this, "Chưa thêm sản phẩm nào", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                startActivity(new Intent(CartManagement.this, PaymentInformation.class));
+            }
+        });
         tvSum = findViewById(R.id.tvSum);
         ivExit = findViewById(R.id.ivExit);
         ivExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartManagement.this, HomePage.class));
+                finish();
             }
         });
     }

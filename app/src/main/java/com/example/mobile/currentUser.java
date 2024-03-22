@@ -1,5 +1,6 @@
 package com.example.mobile;
 
+import com.example.mobile.model.account;
 import com.example.mobile.model.customer;
 
 public class currentUser {

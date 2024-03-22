@@ -17,11 +17,9 @@ import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
     private final List<review> reviewList;
-    private List<customer> listCustomer;
 
-    public ReviewAdapter(List<review> reviewList, List<customer> listCustomer) {
+    public ReviewAdapter(List<review> reviewList) {
         this.reviewList = reviewList;
-        this.listCustomer = listCustomer;
     }
 
     @NonNull
@@ -37,14 +35,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         if (review == null) {
             return ;
         }
-        String username = "";
-        for(customer customer : listCustomer) {
-            if(review.getPhoneNumber().equals(customer.getPhoneNumber())) {
-                username = customer.getFirstName() + " " + customer.getLastName();
-            }
-        }
 
-        holder.tvName.setText(username);
+        holder.tvName.setText(review.getCustomer().getFirstName() + " " + review.getCustomer().getLastName());
         holder.tvDateReview.setText(review.getDateReview());
         holder.ratingBar.setRating(review.getNumOfStar());
         holder.tvContent.setText(review.getContent());

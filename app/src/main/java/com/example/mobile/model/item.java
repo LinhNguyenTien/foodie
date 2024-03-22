@@ -1,57 +1,29 @@
 package com.example.mobile.model;
 
 public class item {
-    private String cartID;
-    private String productID;
-    private String orderID;
-    private String discountID;
+    private String id;
     private String quantity;
     private String price;
-    private String id;
+    private product product;
+    private discount discount;
 
     public item() {
     }
 
-    public item(String cartID, String productID, String orderID, String discountID, String quantity, String price, String id) {
-        this.cartID = cartID;
-        this.productID = productID;
-        this.orderID = orderID;
-        this.discountID = discountID;
+    public item(String id, String quantity, String price, com.example.mobile.model.product product, com.example.mobile.model.discount discount) {
+        this.id = id;
         this.quantity = quantity;
         this.price = price;
+        this.product = product;
+        this.discount = discount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCartID() {
-        return cartID;
-    }
-
-    public void setCartID(String cartID) {
-        this.cartID = cartID;
-    }
-
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public String getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
-    }
-
-    public String getDiscountID() {
-        return discountID;
-    }
-
-    public void setDiscountID(String discountID) {
-        this.discountID = discountID;
     }
 
     public String getQuantity() {
@@ -70,11 +42,19 @@ public class item {
         this.price = price;
     }
 
-    public String getId() {
-        return id;
+    public com.example.mobile.model.product getProduct() {
+        return product;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProduct(com.example.mobile.model.product product) {
+        this.product = product;
+    }
+
+    public com.example.mobile.model.discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(com.example.mobile.model.discount discount) {
+        this.discount = discount;
     }
 }

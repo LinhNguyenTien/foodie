@@ -8,8 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EF2929</color>
-    <color name="btnLogin">#FFEB3B</color>
+    <color name="btnLogin">#ffc522</color>
     <color name="green">#1ADD21</color>
     <color name="orange">#FF9800</color>
     <color name="background_card_product">#D9DADB</color>
+    <color name="gray">#808080</color>
+    <color name="dark_yellow">#E4B666</color>
 </resources>

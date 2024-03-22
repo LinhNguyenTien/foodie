@@ -3,8 +3,11 @@ package com.example.mobile.model;
 import com.google.gson.annotations.SerializedName;
 
 public class category {
+    @SerializedName("id")
     private String categoryID;
+    @SerializedName("title")
     private String category;
+    @SerializedName("url_image_category")
     private String avatarLink;
 
     public category() {

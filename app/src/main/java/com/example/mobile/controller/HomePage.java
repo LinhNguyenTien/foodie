@@ -2,6 +2,9 @@ package com.example.mobile.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -12,18 +15,28 @@ import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.adapter.adsAdapter;
+import com.example.mobile.adapter.productAdapter;
+import com.example.mobile.api.ApiService;
 import com.example.mobile.currentUser;
 import com.example.mobile.model.advertisement;
+import com.example.mobile.model.product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomePage extends AppCompatActivity {
     private TextView tvUsername;
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
+    private RecyclerView rcvProduct;
+    private List<product> productList;
     private adsAdapter adapter;
     private CardView menuCard, orderCard, storeCard, discountCard;
     private ImageView cart, location;
@@ -35,14 +48,36 @@ public class HomePage extends AppCompatActivity {
         //Receive username from login activity
         if (currentUser.currentCustomer != null) {
             tvUsername.setText(currentUser.currentCustomer.getFirstName().toString() + " " + currentUser.currentCustomer.getLastName().toString());
+            tvUsername.setOnClickListener(v -> {
+                startActivity(new Intent(HomePage.this, ProfileManagement.class));
+            });
         }
 
-        //Slider
         adapter = new adsAdapter(this, getListAds());
         viewPager.setAdapter(adapter);
         circleIndicator.setViewPager(viewPager);
-        adapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
 
+        // Set up a TimerTask to automatically scroll every 3 seconds
+        Timer timer = new Timer();
+        final long DELAY_MS = 3000; // 3 seconds
+        final long PERIOD_MS = 3000; // 3 seconds
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    int currentPage = viewPager.getCurrentItem();
+                    int nextPage = (currentPage + 1) % 3;
+                    viewPager.setCurrentItem(nextPage);
+                });
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+        adapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
+        productList = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rcvProduct.setLayoutManager(linearLayoutManager);
+        getBestSellers();
         //Set event for menuCard button
         menuCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +87,32 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    private void getBestSellers() {
+        ApiService.apiService.getBestSellers().enqueue(new Callback<List<product>>() {
+            @Override
+            public void onResponse(Call<List<product>> call, Response<List<product>> response) {
+                if(response.isSuccessful()) {
+                    productList = response.body();
+                    productAdapter productAdapter = new productAdapter(productList);
+                    rcvProduct.setAdapter(productAdapter);
+                }
+                else {
+                    System.out.print("Error code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<product>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private List<advertisement> getListAds() {
         List<advertisement> list = new ArrayList<>();
-        list.add(new advertisement(R.drawable.product01));
-        list.add(new advertisement(R.drawable.product02));
-        list.add(new advertisement(R.drawable.product03));
+        list.add(new advertisement(R.drawable.ad01));
+        list.add(new advertisement(R.drawable.ad02));
+        list.add(new advertisement(R.drawable.ad03));
         return list;
     }
 
@@ -66,19 +122,17 @@ public class HomePage extends AppCompatActivity {
         circleIndicator = findViewById(R.id.circle_indicator);
         menuCard = findViewById(R.id.menuCard);
         orderCard = findViewById(R.id.orderCard);
+        orderCard.setOnClickListener(v -> {
+            startActivity(new Intent(HomePage.this, OrderManagement.class));
+        });
         storeCard = findViewById(R.id.storeCard);
         discountCard = findViewById(R.id.discountCard);
+        rcvProduct = findViewById(R.id.rcvProduct);
         cart = findViewById(R.id.cart);
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomePage.this, CartManagement.class);
-                if(currentUser.currentCustomer == null) {
-                    intent.putExtra("customerPhone", "null");
-                }
-                else {
-                    intent.putExtra("customerPhone", currentUser.currentCustomer.getPhoneNumber());
-                }
                 startActivity(intent);
             }
         });

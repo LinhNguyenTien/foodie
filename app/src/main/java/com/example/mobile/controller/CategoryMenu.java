@@ -43,6 +43,9 @@ public class CategoryMenu extends AppCompatActivity {
         });
         ivLocation = findViewById(R.id.ivLocation);
         ivCart = findViewById(R.id.ivCart);
+        ivCart.setOnClickListener(v -> {
+            startActivity(new Intent(CategoryMenu.this, CartManagement.class));
+        });
         rcv_category = findViewById(R.id.rcvCategory);
     }
 

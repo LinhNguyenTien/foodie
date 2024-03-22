@@ -1,15 +1,19 @@
 package com.example.mobile.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class cart {
+    @SerializedName("id")
     private String cartID;
-    private String phoneNumber;
+    @SerializedName("detail")
+    private String detail;
 
     public cart() {
     }
 
-    public cart(String cartID, String phoneNumber) {
+    public cart(String cartID, String detail) {
         this.cartID = cartID;
-        this.phoneNumber = phoneNumber;
+        this.detail = detail;
     }
 
     public String getCartID() {
@@ -20,11 +24,11 @@ public class cart {
         this.cartID = cartID;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

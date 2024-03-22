@@ -7,17 +7,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile.R;
+import com.example.mobile.api.ApiService;
 import com.example.mobile.controller.ProductDetail;
 import com.example.mobile.controller.ProductMenu;
+import com.example.mobile.currentUser;
+import com.example.mobile.model.item;
+import com.example.mobile.model.itemUpdate;
 import com.example.mobile.model.product;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class productAdapter extends RecyclerView.Adapter<productAdapter.productViewHolder>{
     private final List<product> productList;
@@ -40,8 +50,82 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.productV
             return;
         }
         holder.tvName.setText(product.getProductName());
-        holder.tvPrice.setText(String.valueOf(product.getProductPrice()));
+        DecimalFormat df = new DecimalFormat("#,###");
+        String formattedSum = df.format(product.getProductPrice());
+        holder.tvPrice.setText(formattedSum + "đ");
         Picasso.get().load(product.getImageLink()).placeholder(R.drawable.loading).into(holder.ivProduct);
+        holder.btnBuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiService.apiService.getListItem(currentUser.currentCustomer.getCart().getCartID())
+                        .enqueue(new Callback<List<item>>() {
+                            @Override
+                            public void onResponse(Call<List<item>> call, Response<List<item>> response) {
+                                if(response.isSuccessful()) {
+                                    //Get all items in cart
+                                    List<item> itemList = response.body();
+                                    for(item item : itemList) {
+                                        //Check if the added item is existed
+                                        if (item.getProduct().getProductID().equals(product.getProductID())) {
+                                            updateQuantityItem(item, 1);
+                                            return;
+                                        }
+                                    }
+                                    //This means the added item is the new item
+                                    itemUpdate itemUpdate = new itemUpdate(1);
+                                    ApiService.apiService.addItem(currentUser.currentCustomer.getCart().getCartID(), product.getProductID(), itemUpdate)
+                                            .enqueue(new Callback<Void>() {
+                                                @Override
+                                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                                    if(response.isSuccessful()) {
+                                                        System.out.print("Add item success");
+                                                    }
+                                                    else {
+                                                        System.out.print("Error code: " + response.code());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<Void> call, Throwable t) {
+                                                    System.out.println("Add item fail, Throwable: " + t);
+                                                }
+                                            });
+                                }
+                                else {
+                                    System.out.print("Error code getListItem: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<item>> call, Throwable t) {
+                                System.out.print("check item fail, throwable: " + t);
+                            }
+                        });
+            }
+        });
+    }
+
+    private void updateQuantityItem(item item, int oldQuantity) {
+        int newQuantity = Integer.parseInt(item.getQuantity()) + oldQuantity;
+        System.out.print("New quantity: " + newQuantity);
+        itemUpdate itemUpdate = new itemUpdate(newQuantity);
+        ApiService.apiService.updateCartItemQuantity(item.getId(), itemUpdate)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()) {
+                            System.out.print("Update quantity item success");
+                        }
+                        else {
+                            System.out.print("Error code update quantity: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.print("Update quantity item fail");
+                    }
+                });
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mobile.R;
 import com.example.mobile.api.ApiService;
 import com.example.mobile.currentUser;
+import com.example.mobile.model.account;
 import com.example.mobile.model.customer;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -50,40 +51,26 @@ public class Login extends AppCompatActivity {
         listCustomer = new ArrayList<>();
 
         //Call API customers to ready for check login
-        getListUser();
+//        getListUser();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phone = edtPhoneLogin.getText().toString().trim();
                 String password = edtPasswordLogin.getText().toString().trim();
-
                 //Check if there is no customer, do nothing
-                if(listCustomer.isEmpty() || listCustomer == null) {
-                    return;
-                }
 
                 //This means there is one or more customer in system
                 boolean isCustomer = false;
 
                 //Check phone number and password
-                for (customer customer : listCustomer) {
-                    if (phone.equals(customer.getPhoneNumber()) && cryptoPassword(password).equals(customer.getPassword())) {
-                        isCustomer = true;
-                        //This is correct customer account
-                        currentUser.currentCustomer = customer;
-                        break;
-                    }
-                }
+                System.out.println("clicked on login btn");
+                isCustomer = true;
+                //This is correct customer account
+                account account = new account(phone, password);
+                getListUser(account);
+
                 //Check if there is an account, send this customer to HomePage Activity
-                if (isCustomer) {
-                    Intent intent = new Intent(Login.this, HomePage.class);
-                    startActivity(intent);
-                    //Clear everything
-                    finish();
-                }
-                else {
-                    createPopupWindow();
-                }
+
             }
         });
     }
@@ -158,21 +145,35 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void getListUser() {
-        ApiService.apiService.getListUser()
-                .enqueue(new Callback<List<customer>>() {
-                    @Override
-                    public void onResponse(Call<List<customer>> call, Response<List<customer>> response) {
-                        listCustomer = response.body();
-                        Toast.makeText(Login.this, "list user size: " + listCustomer.size(), Toast.LENGTH_SHORT).show();
-                        System.out.println("list user size: " + listCustomer.size());
+    public void getListUser(account account) {
+        System.out.println("Account: " + account.getPhonenumber() + " pass: " + account.getPassword());
+        ApiService.apiService.login(account).enqueue(new Callback<customer>() {
+            @Override
+            public void onResponse(Call<customer> call, Response<customer> response) {
+                if (response.isSuccessful()) {
+                    currentUser.currentCustomer = response.body();
+                    System.out.println("Username: " + currentUser.currentCustomer.getFirstName());
+                    Toast.makeText(Login.this, "Call api success", Toast.LENGTH_SHORT).show();
+                    if (currentUser.currentCustomer != null) {
+                        Intent intent = new Intent(Login.this, HomePage.class);
+                        startActivity(intent);
+                        //Clear everything
+                        finish();
                     }
+                    else {
+                        createPopupWindow();
+                    }
+                }
+                else {
+                    System.out.println("Error code: " + response.code());
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<List<customer>> call, Throwable t) {
-                        Toast.makeText(Login.this, "Call API Failed", Toast.LENGTH_SHORT).show();
-                        Log.e("MainActivity", t.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<customer> call, Throwable t) {
+                Toast.makeText(Login.this, "Call api fail", Toast.LENGTH_SHORT).show();
+                System.out.println("Throwable: " + t);
+            }
+        });
     }
 }
