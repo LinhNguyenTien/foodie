@@ -147,6 +147,21 @@ public class OrderServiceImpl implements OrderService{
 		List<ResOrderDto> orderDtos = orders.stream().map((order) -> this.modelMapper.map(order, ResOrderDto.class))
 				.collect(Collectors.toList());	
 		return orderDtos;
+	}
+
+	@Override
+	public List<ResOrderDto> getOrdersByAccountAndAcStatus(Integer accountId, Integer orderStatusId) {
+		Account account = this.accountRepository.findById(accountId).orElseThrow(()-> new ResourceNotFoundException("Account","AccountId", accountId));
+		List<Order> orders = this.orderRepository.findByAccount(account);
+		List<Order> ordersResult = new ArrayList<>();
+		for(Order order: orders) {
+			if(order.getOrderStatus().getId() == orderStatusId) {
+				ordersResult.add(order);
+			}
+		}
+		List<ResOrderDto> orderDtos = ordersResult.stream().map((order) -> this.modelMapper.map(order, ResOrderDto.class))
+				.collect(Collectors.toList());	
+		return orderDtos;
 	} 
 	
 

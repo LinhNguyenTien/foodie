@@ -19,4 +19,6 @@ public interface OrderService {
 	List<ProductDto> getThreeProductBestOrder();
 	
 	List<ResOrderDto> getOrdersByOrderStatus(Integer orderStatusId);
+	
+	List<ResOrderDto> getOrdersByAccountAndAcStatus(Integer accountId, Integer orderStatusId);
 }

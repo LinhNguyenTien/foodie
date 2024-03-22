@@ -70,4 +70,13 @@ public class OrderController {
 		List<ResOrderDto> orderDtos = this.orderService.getOrdersByOrderStatus(orderStatusId);
 		return new ResponseEntity<List<ResOrderDto>>(orderDtos, HttpStatus.OK);
 	}
+	
+	@GetMapping("/{accountId}/{orderStatusId}")
+	public ResponseEntity<List<ResOrderDto>> fillterOrderByAccountAndAcStatus(
+			@PathVariable Integer accountId,
+			@PathVariable Integer orderStatusId
+			) {
+		List<ResOrderDto> orderDtos = this.orderService.getOrdersByAccountAndAcStatus(accountId, orderStatusId);
+		return new ResponseEntity<List<ResOrderDto>>(orderDtos, HttpStatus.OK);
+	}
 }
