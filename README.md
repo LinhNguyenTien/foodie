@@ -27,7 +27,8 @@ RESTful API is a standard used in designing APIs for web applications (Web servi
 + Install Spring Tool Suite 4
 + Install MySQL Workbench 8.0
 + Download backend code [in here](https://github.com/LinhNguyenTien/foodie-backend), unzip and import project on Spring Tool Suite.
-+ Open Spring Tool Suite, in file **src/main/resources/application.properties** edit your MySQL username and password.
++ Open Spring Tool Suite, in file **src/main/resources/application.properties** update your MySQL username and password.
++ Open MySQL Wordbench, create a schema named "web_sell_food".
 
 ## Run the project
 + In Spring Tool Suite, **right click on the project name -> Run as -> Maven Build... -> In "Goal" field enter "clean install" to install all nessesary libraries -> Run**.
@@ -39,39 +40,47 @@ There is some features in Foodie Application:
 
 **1. Log in account**
 
-![Figure 1: Screenshot of Login interface](https://i.ibb.co/Zgpb04B/login.png)
+![Figure 1: Screenshot of Login interface](https://i.ibb.co/SnQBxxc/login.png)
 
 **2. Registation**
 
-![Figure 2: Screenshot of Registation interface](https://i.ibb.co/XsjQRtg/registation.png)
+![Figure 2: Screenshot of Registation interface](https://i.ibb.co/1dZcjsh/register.png)
 
 **3. Homepage**
 
-![Figure 3: Screenshot of Login interface](https://i.ibb.co/vh1W9bf/homepage.png)
+![Figure 3: Screenshot of Login interface](https://i.ibb.co/KwX30GY/homepage.png)
 
 **4. Category menu**
 
-![Figure 4: Screenshot of Login interface](https://i.ibb.co/4m1Nmyt/category-Menu.png)
+![Figure 4: Screenshot of Login interface](https://i.ibb.co/Hnq4GKX/category.png)
 
 **5. Product menu**
 
-![Figure 5: Screenshot of Login interface](https://i.ibb.co/JdnhzHb/product-Menu.png)
+![Figure 5: Screenshot of Login interface](https://i.ibb.co/4FKf0Qt/product.png)
 
 **6. Product detail**
 
-![Figure 6: Screenshot of Login interface](https://i.ibb.co/52YWJBv/product-Detail.png)
+![Figure 6: Screenshot of Login interface](https://i.ibb.co/6rZbGCg/product-Detail.png)
 
 **7. Cart detail**
 
-![Figure 7: Screenshot of Login interface](https://i.ibb.co/Wx62pbm/card-Detail.png)
+![Figure 7: Screenshot of Login interface](https://i.ibb.co/wN7rhr4/cart.png)
 
 **8. User profile**
 
-![Figure 8: Screenshot of Login interface](https://i.ibb.co/bKmxSDk/user-Profile.png)
+![Figure 8: Screenshot of Login interface](https://i.ibb.co/zFmYRg8/profile.png)
 
 **9. Payment detail**
 
-![Figure 9: Screenshot of Login interface](https://i.ibb.co/sbGDjbQ/payment.png)
+![Figure 9: Screenshot of Login interface](https://i.ibb.co/kD9sGR6/payment.png)
+
+**10. Change Password**
+
+![Figure 10: Screenshot of change password interface](https://i.ibb.co/PzgjBKh/changepass.png)
+
+**11. Order Management**
+
+![Figure 10: Screenshot of change password interface](https://i.ibb.co/qMpnqXv/order-manager.png)
 
 **and other user interfaces in the process...**
 
