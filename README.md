@@ -40,47 +40,47 @@ There is some features in Foodie Application:
 
 **1. Log in account**
 
-![Figure 1: Screenshot of Login interface](https://i.ibb.co/SnQBxxc/login.png)
+![Figure 1: Screenshot of Login interface](https://i.ibb.co/PCMShzS/login.png)
 
 **2. Registation**
 
-![Figure 2: Screenshot of Registation interface](https://i.ibb.co/1dZcjsh/register.png)
+![Figure 2: Screenshot of Registation interface](https://i.ibb.co/PF1dKy7/register.png)
 
 **3. Homepage**
 
-![Figure 3: Screenshot of Login interface](https://i.ibb.co/KwX30GY/homepage.png)
+![Figure 3: Screenshot of Login interface](https://i.ibb.co/nfzzp1S/homepage.png)
 
 **4. Category menu**
 
-![Figure 4: Screenshot of Login interface](https://i.ibb.co/Hnq4GKX/category.png)
+![Figure 4: Screenshot of Login interface](https://i.ibb.co/YPQyY71/category.png)
 
 **5. Product menu**
 
-![Figure 5: Screenshot of Login interface](https://i.ibb.co/4FKf0Qt/product.png)
+![Figure 5: Screenshot of Login interface](https://i.ibb.co/wsx89ng/product.png)
 
 **6. Product detail**
 
-![Figure 6: Screenshot of Login interface](https://i.ibb.co/6rZbGCg/product-Detail.png)
+![Figure 6: Screenshot of Login interface](https://i.ibb.co/1z14j8h/product-Detail.png)
 
 **7. Cart detail**
 
-![Figure 7: Screenshot of Login interface](https://i.ibb.co/wN7rhr4/cart.png)
+![Figure 7: Screenshot of Login interface](https://i.ibb.co/1rCWmkD/cart.png)
 
 **8. User profile**
 
-![Figure 8: Screenshot of Login interface](https://i.ibb.co/zFmYRg8/profile.png)
+![Figure 8: Screenshot of Login interface](https://i.ibb.co/5289mBB/profile.png)
 
 **9. Payment detail**
 
-![Figure 9: Screenshot of Login interface](https://i.ibb.co/kD9sGR6/payment.png)
+![Figure 9: Screenshot of Login interface](https://i.ibb.co/ZTZCHcN/payment.png)
 
 **10. Change Password**
 
-![Figure 10: Screenshot of change password interface](https://i.ibb.co/PzgjBKh/changepass.png)
+![Figure 10: Screenshot of change password interface](https://i.ibb.co/6wP4d6x/changepass.png)
 
 **11. Order Management**
 
-![Figure 10: Screenshot of change password interface](https://i.ibb.co/qMpnqXv/order-manager.png)
+![Figure 10: Screenshot of change password interface](https://i.ibb.co/f0FJxfm/order-manager.png)
 
 **and other user interfaces in the process...**
 
