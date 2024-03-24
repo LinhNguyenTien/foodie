@@ -10,18 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kt.backend.dto.BillDto;
+import com.kt.backend.dto.OrderDiscountDto;
 import com.kt.backend.dto.OrderDto;
 import com.kt.backend.dto.ProductDto;
 import com.kt.backend.dto.ResOrderDto;
 import com.kt.backend.entity.Account;
 import com.kt.backend.entity.Bill;
 import com.kt.backend.entity.CheckOut;
+import com.kt.backend.entity.Discount;
 import com.kt.backend.entity.Item;
 import com.kt.backend.entity.Order;
 import com.kt.backend.entity.OrderStatus;
 import com.kt.backend.exception.ResourceNotFoundException;
 import com.kt.backend.repository.AccountRepository;
 import com.kt.backend.repository.CheckOutRepository;
+import com.kt.backend.repository.DiscountRepository;
 import com.kt.backend.repository.ItemRepository;
 import com.kt.backend.repository.OrderRepository;
 import com.kt.backend.repository.OrderStatusRepository;
@@ -51,6 +54,9 @@ public class OrderServiceImpl implements OrderService{
 	private ItemRepository itemRepository;
 	
 	@Autowired
+	private DiscountRepository discountRepository;
+	
+	@Autowired
 	private BillService billService;
 	
 	@Autowired
@@ -76,7 +82,7 @@ public class OrderServiceImpl implements OrderService{
 		order.setAccount(account);
 		order.setCheckout(checkout);
 		order.setItems(this.itemRepository.findItemsCurrentByCart(account.getCart().getId()));
-		order.setTotalprice(this.cartService.getTotalPriceOfCartCurrent(account.getCart().getId()));
+		order.setTotalprice(this.cartService.getTotalPriceOfCartCurrent(account.getCart().getId()) + 10000);
 		BillDto billDto = new BillDto();
 		billDto.setIssuedate(order.getOrderdate());
 		billDto.setTotalprice(order.getTotalprice());
@@ -162,6 +168,66 @@ public class OrderServiceImpl implements OrderService{
 		List<ResOrderDto> orderDtos = ordersResult.stream().map((order) -> this.modelMapper.map(order, ResOrderDto.class))
 				.collect(Collectors.toList());	
 		return orderDtos;
+	}
+
+	@Override
+	public Integer getTotalOrderByCustomer(Integer accountId) {
+		Account account = this.accountRepository.findById(accountId).orElseThrow(()-> new ResourceNotFoundException("Account","AccountId", accountId));
+		List<Order> orders = this.orderRepository.findByAccount(account);
+		if(orders == null) {
+			return 0;
+		}else {
+			return orders.size();
+		}	
+	}
+
+	@Override
+	public ResOrderDto applyDiscountForOrder(Integer orderId, String code) {
+		Order order = this.orderRepository.findById(orderId)
+				.orElseThrow(() -> new ResourceNotFoundException("Order ", "OrderId", orderId));
+		if(order.getDiscount()==null) {
+		Discount dis = this.discountRepository.findDiscountByCode(code);
+		order.setDiscount(dis);
+		order.setTotalprice(order.getTotalprice()*dis.getPercent());
+		Order applyOrder = this.orderRepository.save(order);
+		return this.modelMapper.map(applyOrder, ResOrderDto.class);
+		}else {
+			return this.modelMapper.map(order, ResOrderDto.class);
+		}	
+	}
+
+	@Override
+	public ResOrderDto createOrderDiscount(OrderDiscountDto orderDiscountDto, Integer accountId, Integer checkoutId) {
+		Account account = this.accountRepository.findById(accountId).orElseThrow(()-> new ResourceNotFoundException("Account","AccountId", accountId));
+		CheckOut checkout = this.checkOutRepository.findById(checkoutId).orElseThrow(()-> new ResourceNotFoundException("CheckOut","CheckOutId", checkoutId));
+		Discount dis = this.discountRepository.findDiscountByCode(orderDiscountDto.getCode());		
+		Order order = this.modelMapper.map(orderDiscountDto, Order.class);
+		order.setAccount(account);
+		order.setCheckout(checkout);
+		order.setDiscount(dis);
+		order.setItems(this.itemRepository.findItemsCurrentByCart(account.getCart().getId()));
+		if(dis == null) {
+			order.setTotalprice(this.cartService.getTotalPriceOfCartCurrent(account.getCart().getId()));
+		}else {
+			order.setTotalprice(this.cartService.getTotalPriceOfCartCurrent(account.getCart().getId())*dis.getPercent() + 10000);
+		}
+		BillDto billDto = new BillDto();
+		billDto.setIssuedate(order.getOrderdate());
+		billDto.setTotalprice(order.getTotalprice());
+		BillDto responseBill = this.billService.createBill(billDto);		
+		Bill bill = this.modelMapper.map(responseBill, Bill.class);
+		order.setBill(bill);	
+		OrderStatus orStatus = this.orderStatusRepository.findOrderStatusByStatusID(1);
+		order.setOrderStatus(orStatus);
+		Order addOrder = this.orderRepository.save(order);
+		 // Update orderId for items in the list
+	    List<Item> items = order.getItems();
+	    for (Item item : items) {
+	        item.setOrder(order); // Assuming there's a setter for orderId in the Item class
+	    }
+	    // Save the updated items back to the repository if needed
+	    this.itemRepository.saveAll(items);
+		return this.modelMapper.map(addOrder, ResOrderDto.class);
 	} 
 	
 

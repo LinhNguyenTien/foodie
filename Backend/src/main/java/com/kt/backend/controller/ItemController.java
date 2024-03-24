@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.backend.dto.ItemDiscountDto;
 import com.kt.backend.dto.ItemDto;
-import com.kt.backend.dto.ResItemDiscountDto;
 import com.kt.backend.response.ApiResponse;
 import com.kt.backend.service.ItemService;
 
@@ -35,21 +33,21 @@ public class ItemController {
 	}
 	
 	
-	@PostMapping("/addDiscount/{cartId}/{productId}")
-	public ResponseEntity<ResItemDiscountDto> createProductItemDiscount(@RequestBody ItemDiscountDto itemDiscountDto,
-			@PathVariable Integer cartId,
-			@PathVariable Integer productId) {
-		ResItemDiscountDto createItem = this.itemService.createItemDiscount(itemDiscountDto, cartId, productId);
-		return new ResponseEntity<ResItemDiscountDto>(createItem, HttpStatus.CREATED);
-	}
-	
-	@PutMapping("/discount/{itemId}/{code}")
-	public ResponseEntity<ResItemDiscountDto> applyDiscountForItem(
-			@PathVariable Integer itemId,
-			@PathVariable String code) {
-		ResItemDiscountDto applyItem = this.itemService.applyDiscount(itemId, code);
-		return new ResponseEntity<ResItemDiscountDto>(applyItem, HttpStatus.OK);
-	}
+//	@PostMapping("/addDiscount/{cartId}/{productId}")
+//	public ResponseEntity<ResItemDiscountDto> createProductItemDiscount(@RequestBody ItemDiscountDto itemDiscountDto,
+//			@PathVariable Integer cartId,
+//			@PathVariable Integer productId) {
+//		ResItemDiscountDto createItem = this.itemService.createItemDiscount(itemDiscountDto, cartId, productId);
+//		return new ResponseEntity<ResItemDiscountDto>(createItem, HttpStatus.CREATED);
+//	}
+//	
+//	@PutMapping("/discount/{itemId}/{code}")
+//	public ResponseEntity<ResItemDiscountDto> applyDiscountForItem(
+//			@PathVariable Integer itemId,
+//			@PathVariable String code) {
+//		ResItemDiscountDto applyItem = this.itemService.applyDiscount(itemId, code);
+//		return new ResponseEntity<ResItemDiscountDto>(applyItem, HttpStatus.OK);
+//	}
 	
 	
 	@PutMapping("/{itemId}")

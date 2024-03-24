@@ -15,4 +15,6 @@ public interface ReviewService {
 	List<ReviewDto> getReviewsOfAccount(Integer accountId);
 	
 	List<ReviewDto> getReviewsOfProduct(Integer productId);
+	
+	Integer getTotalReview();
 }

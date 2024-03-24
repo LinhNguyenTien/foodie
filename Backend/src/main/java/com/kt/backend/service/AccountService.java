@@ -32,5 +32,5 @@ public interface AccountService {
 	ResAccountDto updateAccount(UpdateAccountDto updateAccountDto, Integer accountId);
 	
 	boolean changePassword(Integer accountId, ChangePasswordDto changePassword);
-	
+
 }

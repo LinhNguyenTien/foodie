@@ -55,6 +55,11 @@ public class ReviewController {
 		return new ResponseEntity<List<ReviewDto>>(itemDtos, HttpStatus.OK);
 	}
 	
+	@GetMapping("/totalreview/")
+	public ResponseEntity<Integer> getTotalReview() {
+		return new ResponseEntity<Integer>(this.reviewService.getTotalReview(), HttpStatus.OK);
+	}
+	
 	@GetMapping("/product/{productId}")
 	public ResponseEntity<List<ReviewDto>> getListReviewOfProduct(@PathVariable Integer productId) {
 		List<ReviewDto> itemDtos = this.reviewService.getReviewsOfProduct(productId);

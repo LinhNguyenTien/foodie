@@ -44,6 +44,11 @@ public class Order {
 	
 	@JsonBackReference
 	@ManyToOne
+	@JoinColumn(name = "discount_id")
+	private Discount discount;
+	
+	@JsonBackReference
+	@ManyToOne
     @JoinColumn(name = "order_status_id")
 	private OrderStatus orderStatus;
 	

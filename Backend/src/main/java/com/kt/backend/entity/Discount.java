@@ -39,9 +39,13 @@ public class Discount {
 	
 	private String enddate;
 	
+//	@JsonManagedReference
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "discount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Item> items = new ArrayList<>();
 	
 	@JsonManagedReference
 	@JsonIgnore
 	@OneToMany(mappedBy = "discount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Item> items = new ArrayList<>();
+	private List<Order> orders = new ArrayList<>();
 }

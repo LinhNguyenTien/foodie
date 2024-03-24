@@ -84,4 +84,14 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDtos;
 	}
 
+	@Override
+	public Integer getTotalReview() {
+		List<Review> reviews = this.reviewRepository.findAllReview();
+		if(reviews == null) {
+			return 0;
+		}else {
+			return reviews.size();
+		}
+	}
+
 }

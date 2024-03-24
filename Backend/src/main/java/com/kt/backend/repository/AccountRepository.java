@@ -16,4 +16,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	@Query(value = "select * from account where account.phonenumber = :phonenumber and account.password = :password", nativeQuery = true)
 	Account findAccountByLoginDto(@Param("phonenumber") String phonenumber, @Param("password") String password);
 	
+	@Query(value = "select * from account where account.phonenumber = :phonenumber or  account.email = :email", nativeQuery = true)
+	List<Account> isValidOfPhoneNumberAndEmail(@Param("phonenumber") String phonenumber, @Param("email") String email);
+	
+
 }

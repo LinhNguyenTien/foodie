@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kt.backend.dto.OrderDiscountDto;
 import com.kt.backend.dto.OrderDto;
 import com.kt.backend.dto.ProductDto;
 import com.kt.backend.dto.ResOrderDto;
@@ -38,12 +39,35 @@ public class OrderController {
 		return new ResponseEntity<ResOrderDto>(createOrder, HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/addDiscount/{accountId}/{checkoutId}")
+	public ResponseEntity<ResOrderDto> createOrderDiscount(
+			@RequestBody OrderDiscountDto orderDiscountDto,
+			@PathVariable Integer accountId,
+			@PathVariable Integer checkoutId
+			) {
+		ResOrderDto createOrder = this.orderService.createOrderDiscount(orderDiscountDto, accountId, checkoutId);
+		return new ResponseEntity<ResOrderDto>(createOrder, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/discount/{orderId}/{code}")
+	public ResponseEntity<ResOrderDto> applyDiscountForOrder(
+			@PathVariable Integer orderId,
+			@PathVariable String code) {
+		ResOrderDto applyOrder = this.orderService.applyDiscountForOrder(orderId, code);
+	return new ResponseEntity<ResOrderDto>(applyOrder, HttpStatus.OK);
+	}
+	
 	@GetMapping("/{orderId}")
 	public ResponseEntity<OrderDto> getOrder(@PathVariable Integer orderId) {
 		OrderDto orderDto = this.orderService.getOrder(orderId);
 		return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
 	}
 
+	@GetMapping("/totalOrder/account/{accountId}")
+	public ResponseEntity<Integer> getTotalOrderByCustomer(@PathVariable Integer accountId) {	
+		return new ResponseEntity<Integer>(this.orderService.getTotalOrderByCustomer(accountId), HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{orderId}")
 	public ResponseEntity<ApiResponse> deleteOrderById(@PathVariable Integer orderId) {
 		this.orderService.deleteOrder(orderId);

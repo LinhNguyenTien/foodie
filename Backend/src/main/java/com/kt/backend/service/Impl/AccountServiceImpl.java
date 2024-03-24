@@ -49,43 +49,47 @@ public class AccountServiceImpl implements AccountService {
 	private ModelMapper modelMapper;
 	
 	@Override
-	public ResAccountDto createCustomerAccount(AccountDto accountDto, Integer roleId) {
-		
+	public ResAccountDto createCustomerAccount(AccountDto accountDto, Integer roleId) {		
 		Role role = this.roleRepository.findById(roleId)
 				.orElseThrow(() -> new ResourceNotFoundException("Role ", "roleId", roleId));
+		String phoneNumber = accountDto.getPhonenumber();
+		String email = accountDto.getEmail();
+		List<Account> listAc = this.accountRepository.isValidOfPhoneNumberAndEmail(phoneNumber, email);
+		if(listAc.isEmpty()) {
 		CartDto cartDto = new CartDto();
 		cartDto.setDetail("Cart of "+accountDto.getLastname());
-		
 		CartDto newCart = this.cartService.createCart(cartDto);
-		Cart cart = this.modelMapper.map(newCart, Cart.class);
-		
-		AccountStatus acStatus = this.acStatusRepository.findAccountStatusByStatus("Active");
-		
+		Cart cart = this.modelMapper.map(newCart, Cart.class);	
+		AccountStatus acStatus = this.acStatusRepository.findAccountStatusByStatus("Active");	
 		Account account = this.modelMapper.map(accountDto, Account.class);
 		account.setRole(role);
 		account.setCart(cart);
 		account.setAccount_status(acStatus);
-		
 		Account newAccount = this.accountRepository.save(account);
 		return this.modelMapper.map(newAccount, ResAccountDto.class);
-		
+		}else {
+			return new ResAccountDto();
+		}
 	}
 
 	@Override
-	public ResAccountDto createStaffAccount(AccountDto accountDto, Integer roleId) {
-		
+	public ResAccountDto createStaffAccount(AccountDto accountDto, Integer roleId) {		
 		Role role = this.roleRepository.findById(roleId)
 				.orElseThrow(() -> new ResourceNotFoundException("Role ", "roleId", roleId));
-
-		AccountStatus acStatus = this.acStatusRepository.findAccountStatusByStatus("Active");
+		AccountStatus acStatus = this.acStatusRepository.findAccountStatusByStatus("Active");	
+		String phoneNumber = accountDto.getPhonenumber();
+		String email = accountDto.getEmail();
+		List<Account> listAc = this.accountRepository.isValidOfPhoneNumberAndEmail(phoneNumber, email);
+		if(listAc.isEmpty()) {
+			Account account = this.modelMapper.map(accountDto, Account.class);		
+			account.setRole(role);
+			account.setAccount_status(acStatus);	
+			Account newAccount = this.accountRepository.save(account);
+			return this.modelMapper.map(newAccount, ResAccountDto.class);
+		}else {
+			return new ResAccountDto();
+		}
 		
-		Account account = this.modelMapper.map(accountDto, Account.class);
-		
-		account.setRole(role);
-		account.setAccount_status(acStatus);
-		
-		Account newAccount = this.accountRepository.save(account);
-		return this.modelMapper.map(newAccount, ResAccountDto.class);
 	}
 
 	@Override
@@ -93,11 +97,15 @@ public class AccountServiceImpl implements AccountService {
 		
 		Account account = this.accountRepository.findById(accountId)
 				.orElseThrow(() -> new ResourceNotFoundException("Account", "AccountId", accountId));
-		Integer cartId = account.getCart().getId();
-		this.accountRepository.delete(account);
-		this.cartService.deleteCart(cartId);
+		if(account.getCart() == null) {
+			this.accountRepository.delete(account);
+		}else {
+			Integer cartId = account.getCart().getId();
+			this.accountRepository.delete(account);
+			this.cartService.deleteCart(cartId);
+		}		
 	}
-
+	
 	@Override
 	public List<ResAccountDto> getAccountsByRole(Integer roleId) {
 		Role role = this.roleRepository.findById(roleId)

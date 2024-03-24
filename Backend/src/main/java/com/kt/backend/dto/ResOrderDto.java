@@ -5,6 +5,7 @@ import java.util.List;
 import com.kt.backend.entity.Account;
 import com.kt.backend.entity.Bill;
 import com.kt.backend.entity.CheckOut;
+import com.kt.backend.entity.Discount;
 import com.kt.backend.entity.Item;
 import com.kt.backend.entity.OrderStatus;
 
@@ -25,6 +26,8 @@ public class ResOrderDto {
 	private Double totalprice;
 	
 	private Account account;
+	
+	private Discount discount;
 	
 	private OrderStatus orderStatus;
 

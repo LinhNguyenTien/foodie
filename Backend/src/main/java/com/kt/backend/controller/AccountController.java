@@ -51,6 +51,12 @@ public class AccountController {
 		return new ResponseEntity<List<ResAccountDto>>(accountDtos, HttpStatus.OK);
 	}
 
+	@GetMapping("/totalaccount/{roleId}")
+	public ResponseEntity<Integer> getTotalCustomer(@PathVariable Integer roleId) {
+		List<ResAccountDto> accountDtos = this.accountService.getAccountsByRole(roleId);
+		return new ResponseEntity<Integer>(accountDtos.size(), HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{accountId}")
 	public ResponseEntity<ApiResponse> deleteAccount(@PathVariable Integer accountId) {
 		this.accountService.deleteAccount(accountId);

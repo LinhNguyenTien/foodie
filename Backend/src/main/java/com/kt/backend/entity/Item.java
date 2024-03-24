@@ -1,6 +1,5 @@
 package com.kt.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -43,10 +42,10 @@ public class Item {
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
 	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "discount_id")
-	private Discount discount;
+//	@JsonBackReference
+//	@ManyToOne
+//	@JoinColumn(name = "discount_id")
+//	private Discount discount;
 	
 	@JsonIgnore
 	@ManyToOne
